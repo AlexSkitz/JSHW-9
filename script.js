@@ -98,7 +98,7 @@ Chat Server
 
 function variables(){
     let url = '';
-    let nickname = '';
+    let nick = '';
     let messageCount = 0;
     let isStart = true;
     let isScroll = false;
@@ -109,7 +109,7 @@ function variables(){
 
     return{
         seturl: (val)=>url = val,
-        setnickname: (val)=>nickname = val,
+        setnickname: (val)=>nick = val,
         setmessageCount: (val)=>messageCount = val,
         setisStart: (val)=>isStart = val,
         setisScroll: (val)=>isScroll = val,
@@ -117,7 +117,7 @@ function variables(){
         setpreviousShowedMessages: (val)=>previousShowedMessages = val,
 
         geturl: ()=>url,
-        getnickname: ()=>nickname,
+        getnickname: ()=>nick,
         getmessageCount: ()=>messageCount,
         getisStart: ()=>isStart,
         getisScroll: ()=>isScroll,
@@ -178,10 +178,10 @@ const showChat = (showArray) =>{
         showDiv.innerHTML = '';
     }
     showArray.forEach((element,key) => {
-        if(element.nickname.length === 0){
+        if(element.nick && element.nick.length == 0 ){
             return
         }
-        if(element.message.length === 0){
+        if(element.message && element.message.length == 0){
             return;
         }
         let elementDiv = document.createElement("div");
@@ -194,7 +194,8 @@ const showChat = (showArray) =>{
         elementTime.className = "message-time__item";
         elementTime.innerHTML = new Date(element.timestamp).toLocaleString().slice(0,-3);
         elementNickname.className = "message-nickname__item";
-        elementNickname.innerText = element.nickname;
+        debugger
+        elementNickname.innerText = element.nick ;
         elementMessage.className = "messages__item";
         elementMessage.innerText = element.message;
         elementDiv.append(elementParagraph);
@@ -226,7 +227,7 @@ async function sendCheck(){
         return;
     }
     checkLoop.stop();
-    let promise = jsonPost_fetch(myVariables.geturl(), {func: 'addMessage', nickname: myVariables.getnickname(), message: source.value});
+    let promise = jsonPost_fetch(myVariables.geturl(), {func: 'addMessage', nick: myVariables.getnickname(), message: source.value});
     source.value = '';
 
     let result = await promise.then((result)=>result.json(),(error)=>console.error("Error is: ", error));

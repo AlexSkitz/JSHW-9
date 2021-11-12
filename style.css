@@ -84,3 +84,7 @@ button{
 .message-list{
     margin: 5px;
 }
+.message-nickname__item{
+    font-weight: bold;
+    margin: 10px;
+}
